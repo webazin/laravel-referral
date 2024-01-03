@@ -21,7 +21,7 @@ migrations
 Add ReferralTrait Trait to your User model.
 
 ```php
-use Webazin\Referral\Webazin\ReferralTrait
+use Webazin\Referral\ReferralTrait
 
 class User extends Model
 {
