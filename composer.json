@@ -16,20 +16,22 @@
     }
   ],
   "require": {
-    "php": "^7.4"
+    "php": ">=7.0"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "sort-packages": true,
-    "preferred-install": "dist",
-    "optimize-autoloader": true
+  "require-dev": {
+    "laravel/laravel": "*"
   },
   "extra": {
     "laravel": {
       "providers": [
         "Webazin\\Referral\\ReferralServiceProvider"
       ]
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
     }
   }
 }
