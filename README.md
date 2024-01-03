@@ -10,16 +10,10 @@ Via [Composer](https://getcomposer.org) to add the package to your project's dep
 composer require "webazin/referral @dev"
 ```
 
-Publish the migrations
+migrations
 
 ```bash
-php artisan vendor:publish --provider="Webazin\Referral\ReferralServiceProvider" --tag="migrations"
-```
-
-Publish the config
-
-```bash
-php artisan vendor:publish --provider="Webazin\Referral\ReferralServiceProvider" --tag="routes"
+ php artisan migrate
 ```
 
 ## Setup the model
