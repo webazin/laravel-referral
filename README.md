@@ -10,38 +10,77 @@ Via [Composer](https://getcomposer.org) to add the package to your project's dep
 composer require "webazin/referral @dev"
 ```
 
-migrations
+Publish the migrations
 
 ```bash
- php artisan migrate
+php artisan vendor:publish --provider="Questocat\Referral\ReferralServiceProvider" --tag="migrations"
+```
+
+Publish the config
+
+```bash
+$ php artisan vendor:publish --provider="Questocat\Referral\ReferralServiceProvider" --tag="config"
 ```
 
 ## Setup the model
 
-Add ReferralTrait Trait to your User model.
+Add UserReferral Trait to your User model.
 
 ```php
-use Webazin\Referral\ReferralTrait
+use Questocat\Referral\Traits\UserReferral
 
 class User extends Model
 {
-    use ReferralTrait;
+    use UserReferral;
 }
 ```
 
-## Params
+## Usage
+
+Assigning CheckReferral Middleware To Routes.
 
 ```php
-App\User::find(1)->getRefLink();
+// Within App\Http\Kernel Class...
 
-App\User::find(1)->setParentId($referralCode);
-App\User::find(1)->getParent();
-
-App\User::find(1)->setReferralCode();
-// if this set --- set parent id 
-App\User::find(1)->getReferralCodeFromCookie();
-
+protected $routeMiddleware = [
+    'referral' => \Questocat\Referral\Http\Middleware\CheckReferral::class,
+];
 ```
+
+Once the middleware has been defined in the HTTP kernel, you may use the middleware method to assign middleware to a route:
+
+```php
+Route::get('/', 'HomeController@index')->middleware('referral');
+```
+
+Now you can create the user:
+
+```php
+$user = new App\User();
+$user->name = 'zhengchaopu';
+$user->password = bcrypt('password');
+$user->email = 'zhengchaopu@gmail.com';
+$user->save();
+
+// Or
+
+$data = [
+    'name' => 'zhengchaopu',
+    'password' => bcrypt('password'),
+    'email' => 'zhengchaopu@gmail.com',
+];
+
+App\User::create($data);
+```
+
+Get the referral link:
+
+```php
+$user = App\User::findOrFail(1);
+
+{{ $user->getReferralLink() }}
+```
+
 
 ## License
 

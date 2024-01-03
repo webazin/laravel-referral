@@ -2,6 +2,7 @@
 
 namespace Webazin\Referral;
 
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
 class ReferralServiceProvider extends ServiceProvider

@@ -4,9 +4,16 @@ namespace Webazin\Referral;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 trait ReferralTrait
 {
+    public function __construct()
+    {
+        $this->fillable[] = 'parent_id';
+        $this->fillable[] = 'referral_code';
+    }
+
     public function getRefLink(): string
     {
         return route('referral.redirect', ['affiliate_code' => $this->getReferralCode()]);
@@ -14,6 +21,9 @@ trait ReferralTrait
 
     public function getReferralCode(): string
     {
+        if (!$this->referral_code) {
+            $this->setReferralCode();
+        }
         return $this->referral_code;
     }
 
@@ -42,11 +52,16 @@ trait ReferralTrait
         return null;
     }
 
-    public function setParentId($code)
+    public function setParentId()
     {
-        $this->update([
-            'parent_id' => $this->getUserByReferral($code)
-        ]);
+        if ($this->getReferralCodeFromCookie()) {
+            if ($this->getUserByReferral($this->getReferralCodeFromCookie())?->id != $this->id) {
+                $this->update([
+                    'parent_id' => $this->getUserByReferral($this->getReferralCodeFromCookie())?->id
+                ]);
+                $this->deleteCookie();
+            }
+        }
     }
 
     /**
@@ -55,6 +70,11 @@ trait ReferralTrait
      */
     public function getReferralCodeFromCookie(): array|string|null
     {
-        return cookie()->get('referral');
+        return Cookie::get('referral');
+    }
+
+    private function deleteCookie()
+    {
+        Cookie::forget('referral');
     }
 }
