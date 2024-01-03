@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Webazin\Referral\src;
+namespace App\Webazin\Referral;
 
 use Illuminate\Support\ServiceProvider;
 
