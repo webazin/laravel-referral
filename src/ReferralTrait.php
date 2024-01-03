@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Webazin\Referral\src;
+namespace Webazin\Referral;
 
 use App\Models\User;
 use Illuminate\Http\Request;
