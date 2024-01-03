@@ -1,0 +1,35 @@
+{
+  "name": "webazin/referral",
+  "description": "A Referral system for Laravel application",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Webazin\\Referral\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "mahdi farhadpour",
+      "email": "farhadpour4187@gmail.com",
+      "homepage": "https://webazin.net"
+    }
+  ],
+  "require": {
+    "php": "^7.4"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Webazin\\Referral\\ReferralServiceProvider"
+      ]
+    }
+  }
+}
