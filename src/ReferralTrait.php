@@ -5,6 +5,9 @@ namespace Webazin\Referral;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 trait ReferralTrait
 {
@@ -62,6 +65,21 @@ trait ReferralTrait
                 $this->deleteCookie();
             }
         }
+    }
+
+    public function parent(): HasOne
+    {
+        return $this->HasOne(self::class, 'parent_id', 'id');
+    }
+
+    public function child(): HasMany
+    {
+        return $this->HasMany(self::class, 'parent_id', 'id');
+    }
+
+    public function referralCount()
+    {
+        return $this->child()->count();
     }
 
     /**

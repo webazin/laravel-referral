@@ -41,6 +41,12 @@ App\User::find(1)->setReferralCode();
 // if this set --- set parent id 
 App\User::find(1)->getReferralCodeFromCookie();
 
+//relationships
+App\User::find(1)->parent;
+App\User::find(1)->child;
+
+App\User::find(1)->referralCount();
+
 ```
 
 ## License
